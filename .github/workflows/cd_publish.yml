@@ -36,11 +36,15 @@ jobs:
       - name: ➕ Actions - Checkout
         uses: actions/checkout@v6
 
+      - name: ➕ Actions - Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/*"
+          registry-url: "https://registry.npmjs.org"
       - name: ➕ Actions - Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-
       - name: ➕ Cache Dependencies
         uses: actions/cache@v4
         with:
