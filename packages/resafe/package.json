@@ -1,0 +1,58 @@
+{
+  "name": "resafe",
+  "version": "1.0.0",
+  "description": "🛡️ Detects ReDoS vulnerabilities in regexes using Thompson NFA construction and spectral radius analysis",
+  "license": "MIT",
+  "homepage": "https://resafe.js.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ofabiodev/resafe/resafe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ofabiodev/resafe/issues"
+  },
+  "author": {
+    "name": "ofabiodev",
+    "url": "https://github.com/ofabiodev"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "prepublishOnly": "npm run build",
+    "test": "poku"
+  },
+  "keywords": [
+    "regex",
+    "redos",
+    "regexp",
+    "security",
+    "vulnerability",
+    "performance",
+    "analyzer",
+    "validation",
+    "backtracking",
+    "lightweight"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^25.0.3",
+    "poku": "^3.0.2",
+    "tsup": "^8.5.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

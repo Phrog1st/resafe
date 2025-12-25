@@ -1,0 +1,18 @@
+{
+  "title": "Hello Folder",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "---Getting Started---",
+    "installation",
+    "quick-start",
+    "---Concepts---",
+    "spectral-radius",
+    "---API---",
+    "api",
+    "configuration",
+    "---Security---",
+    "rules",
+    "examples"
+  ]
+}

@@ -1,0 +1,42 @@
+---
+title: Installation
+description: Install Resafe in your project.
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Steps>
+<Step>
+### Choose your package manager
+
+```bash
+# Using npm
+npm install resafe
+
+# Using yarn
+yarn add resafe
+
+# Using pnpm
+pnpm add resafe
+
+# Using bun (recommended)
+bun add resafe
+```
+</Step>
+
+<Step>
+### Import in your project
+
+```ts
+import { check } from "resafe";
+```
+</Step>
+</Steps>
+
+## Requirements
+
+- **Node.js**: 16.0.0 or higher
+- **TypeScript**: 5.0 or higher (optional)
+- **Zero dependencies**: No additional packages required
+
+Perfect for edge environments like Cloudflare Workers, Vercel Edge Functions, and serverless deployments.

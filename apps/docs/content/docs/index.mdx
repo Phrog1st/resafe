@@ -1,0 +1,24 @@
+---
+title: Hello
+description: Welcome to Resafe - intelligent ReDoS detection for your regex patterns.
+icon: Sparkles
+---
+
+## What is ReDoS?
+
+Regular Expression Denial of Service occurs when a regex engine gets stuck in catastrophic backtracking, potentially freezing your application's event loop. A single malicious input can bring down your entire service.
+
+```ts
+// This innocent-looking regex can freeze your app
+const dangerous = /(a+)+$/;
+dangerous.test("aaaaaaaaaaaaaaaaaaaaX"); // Takes exponential time!
+```
+
+## How Resafe Helps
+
+Resafe analyzes regex patterns **before execution** using mathematical spectral analysis:
+
+- **Prevention First**: Block unsafe patterns before they reach production
+- **Spectral Analysis**: Thompson NFA construction with eigenvalue computation
+- **Fast Analysis**: Average analysis time \<1ms per typical pattern
+- **Deterministic**: Analyzes automaton structure, not heuristic patterns

@@ -1,0 +1,19 @@
+{
+  "name": "resafe",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "poku",
+    "format": "biome format --write",
+    "lint": "biome lint --write",
+    "build:package": "bun run --filter resafe build",
+    "dev:docs": "bun run --filter docs dev"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.10",
+    "poku": "3.0.2"
+  }
+}

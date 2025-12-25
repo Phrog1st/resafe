@@ -1,0 +1,102 @@
+---
+title: Examples
+description: Real-world examples of using Resafe to secure regex patterns.
+---
+
+## Input Validation
+
+### Email Validation
+
+```ts
+import { check } from "resafe";
+
+// ✅ Safe email pattern
+const safeEmail = "^[\\w._%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$";
+const r1 = check(safeEmail, { silent: true });
+console.log(r1.safe);  // true
+
+// ❌ Dangerous email pattern
+const dangerousEmail = "^(.+)*@(.+)*\\.(com|org)$";
+const r2 = check(dangerousEmail, { silent: true });
+console.log(r2.safe);    // false
+console.log(r2.radius);  // > 1.0
+
+// ✅ Fixed version
+const fixedEmail = "^.+@.+\\.(com|org)$";
+check(fixedEmail);  // Safe
+```
+
+## Web Security
+
+### XSS Prevention
+
+```ts
+// ✅ Safe script tag detection
+const safeScript = "<script[^>]*>";
+check(safeScript);  // Safe
+
+// ❌ Dangerous script detection
+const dangerousScript = "(.*<script.*>)*";
+check(dangerousScript);  // Unsafe
+
+// ✅ Fixed version
+const fixedScript = ".*<script.*>";
+check(fixedScript);  // Safe
+```
+
+## Production Middleware
+
+### Express.js Middleware
+
+```ts
+import express from "express";
+import { check } from "resafe";
+
+const app = express();
+
+app.use("/api/search", (req, res, next) => {
+  const { pattern } = req.query;
+  
+  if (typeof pattern === "string") {
+    try {
+      check(pattern, { 
+        throwErr: true, 
+        silent: true,
+        threshold: 1.0
+      });
+      next();
+    } catch (error) {
+      res.status(400).json({ 
+        error: "Unsafe regex pattern detected",
+        message: error.message 
+      });
+    }
+  } else {
+    next();
+  }
+});
+```
+
+### Fastify Plugin
+
+```ts
+import fastify from "fastify";
+import { check } from "resafe";
+
+const server = fastify();
+
+server.addHook("preHandler", async (request, reply) => {
+  const pattern = request.query.pattern;
+  
+  if (typeof pattern === "string") {
+    const result = check(pattern, { silent: true });
+    
+    if (!result.safe) {
+      reply.code(400).send({
+        error: "Unsafe regex pattern",
+        radius: result.radius
+      });
+    }
+  }
+});
+```

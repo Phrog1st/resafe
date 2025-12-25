@@ -1,0 +1,195 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: Necessary */
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+:root {
+  --color-background: #080808;
+  --color-foreground: #a1a1aa;
+  --color-fd-primary: #ffffff;
+  --color-fd-border: rgba(255, 255, 255, 0.05);
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+}
+
+@layer base {
+  :root {
+    --fd-background: 0 0% 3.1%;
+    --fd-foreground: 240 5% 64.7%;
+    --fd-primary: 0 0% 100%;
+    --fd-border: 0 0% 100% / 5%;
+  }
+
+  body {
+    background-color: #080808;
+    color: #a1a1aa;
+  }
+}
+
+#nd-sidebar {
+  background-color: #080808 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+#nd-page header {
+  margin-bottom: 0px !important;
+}
+
+.fd-sidebar-item {
+  border-radius: 0px !important;
+  margin-inline: 0px !important;
+  color: #71717a !important;
+}
+
+.fd-sidebar-item[data-active="true"] {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  color: white !important;
+  border-left: 1px solid white !important;
+}
+
+.fd-nav {
+  background-color: rgba(8, 8, 8, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  height: 5rem !important;
+}
+
+.fd-sidebar-heading {
+  color: #3f3f46 !important;
+  font-family: ui-monospace, monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+  font-size: 10px !important;
+  padding-left: 1.5rem !important;
+}
+
+.fd-toc {
+  background-color: #080808 !important;
+}
+
+.fd-toc-item {
+  font-family: ui-monospace, monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  font-size: 10px !important;
+}
+
+.fd-toc-item[data-active="true"] {
+  color: white !important;
+  border-left-color: white !important;
+}
+
+#nd-sidebar p.inline-flex.items-center.gap-2.mb-1\.5.px-2.mt-6 {
+  color: #71717a;
+  font-family: ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding-left: calc(2 * var(--spacing));
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.fd-search-button {
+  border-radius: 0px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background-color: transparent !important;
+}
+
+pre {
+  background-color: #0c0c0c !important; /* Fundo sólido único */
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 0px !important;
+  padding: 1.25rem !important;
+  margin: 1.5rem 0 !important;
+  overflow-x: auto;
+}
+
+pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+pre span {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0px !important;
+}
+
+.nd-codeblock span {
+  color: #d4d4d4 !important;
+  background: transparent !important;
+  font-style: normal !important;
+}
+
+.nd-codeblock span[style*="--shiki-light:#D73A49"],
+.nd-codeblock span[style*="--shiki-light:#F97583"],
+.nd-codeblock span[style*="--shiki-light: #D73A49"],
+.nd-codeblock span[style*="--shiki-light: #F97583"] {
+  color: #f5a97f !important;
+}
+
+.nd-codeblock span[style*="--shiki-light:#6F42C1"],
+.nd-codeblock span[style*="--shiki-light:#B392F0"],
+.nd-codeblock span[style*="--shiki-light: #6F42C1"],
+.nd-codeblock span[style*="--shiki-light: #B392F0"] {
+  color: #caa9ff !important;
+}
+
+.nd-codeblock span[style*="--shiki-light:#032F62"],
+.nd-codeblock span[style*="--shiki-light:#9ECBFF"],
+.nd-codeblock span[style*="--shiki-light: #032F62"],
+.nd-codeblock span[style*="--shiki-light: #9ECBFF"] {
+  color: #9fc5e8 !important;
+}
+
+.nd-codeblock span[style*="--shiki-light:#24292E"],
+.nd-codeblock span[style*="--shiki-light:#E1E4E8"],
+.nd-codeblock span[style*="--shiki-light: #24292E"],
+.nd-codeblock span[style*="--shiki-light: #E1E4E8"] {
+  color: #d4d4d4 !important;
+}
+
+.nd-codeblock span[style*="--shiki-light:#6A737D"],
+.nd-codeblock span[style*="--shiki-light: #6A737D"] {
+  color: #8c8c8c !important;
+  font-style: italic !important;
+}
+
+.nd-codeblock span[style*="--shiki-light:#DBEDFF"],
+.nd-codeblock span[style*="--shiki-light: #DBEDFF"] {
+  color: #f38ba8 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+div.flex.flex-col.border-t.p-4.pt-2 {
+  display: none !important;
+}
+
+table {
+  border-collapse: collapse !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background-color: transparent !important;
+}
+
+thead {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+th {
+  color: white !important;
+  font-family: ui-monospace, monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  font-size: 11px !important;
+  padding: 12px !important;
+}
+
+td {
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding: 12px !important;
+  color: #a1a1aa !important;
+}

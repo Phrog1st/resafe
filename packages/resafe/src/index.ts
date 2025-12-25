@@ -1,0 +1,37 @@
+import { analyze, type Config, type Result } from "./core/analyzer.ts"
+import { log } from "./utils/logger.ts"
+
+export interface Options extends Config {
+  silent?: boolean
+  throwErr?: boolean
+}
+
+export function check(regex: string | RegExp, options: Options = {}): Result {
+  const pattern = typeof regex === "string" ? regex : regex.source
+  const result = analyze(pattern, options)
+
+  if (!result.safe && !options.silent) {
+    log.error(`[Resafe] Unsafe pattern: /${pattern}/`)
+    log.warn(
+      `Spectral radius: ${result.radius.toFixed(4)} (threshold: ${options.threshold ?? 1.0})`,
+    )
+    log.hint("Simplify regex structure to eliminate exponential paths")
+  }
+
+  if (!result.safe && options.throwErr) {
+    throw new Error(
+      `[Resafe] Unsafe pattern with spectral radius ${result.radius.toFixed(4)}`,
+    )
+  }
+
+  return result
+}
+
+export async function checkAsync(
+  regex: string | RegExp,
+  options: Options = {},
+): Promise<Result> {
+  return Promise.resolve(check(regex, options))
+}
+
+export type { Result, Config } from "./core/analyzer.ts"

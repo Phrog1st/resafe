@@ -1,0 +1,71 @@
+---
+title: API Reference
+description: Complete API documentation for Resafe.
+---
+
+## `check(regex, options)`
+
+The primary function that analyzes regex patterns for ReDoS vulnerabilities.
+
+```ts
+import { check } from "resafe";
+
+const result = check(pattern, options);
+```
+
+### Parameters
+
+#### `regex`
+- **Type**: `string | RegExp`
+- **Required**: Yes
+- **Description**: The regex pattern to analyze
+
+```ts
+// String pattern
+check("(a+)+$");
+
+// RegExp object
+check(/(a+)+$/);
+```
+
+#### `options`
+- **Type**: `Options`
+- **Required**: No
+- **Description**: Configuration options
+
+### Options
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `threshold` | `number` | `1.0` | Spectral radius threshold for unsafe patterns |
+| `silent` | `boolean` | `false` | Disable console logging |
+| `throwErr` | `boolean` | `false` | Throw error for unsafe patterns |
+
+### Return Value
+
+Returns a `Result` object:
+
+```ts
+interface Result {
+  safe: boolean;     // Whether the pattern is safe
+  radius: number;    // Spectral radius value
+}
+```
+
+### Examples
+
+```ts
+// Basic usage
+const result = check("(a+)+");
+console.log(result.safe);    // false
+console.log(result.radius);  // 4.0
+
+// Custom threshold
+const result2 = check("(a+)+", { threshold: 5.0 });
+console.log(result2.safe);   // true (radius 4.0 < 5.0)
+
+// Silent mode
+const result3 = check("^[0-9]+$", { silent: true });
+console.log(result3.safe);   // true
+console.log(result3.radius); // 1.0
+```

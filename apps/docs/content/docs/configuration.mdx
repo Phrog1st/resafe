@@ -1,0 +1,63 @@
+---
+title: Configuration
+description: Configure Resafe for different environments and use cases.
+---
+
+## Threshold Configuration
+
+The `threshold` option controls the spectral radius limit. Patterns with [radius](/docs/spectral-radius) > threshold are considered unsafe.
+
+```ts
+import { check } from "resafe";
+
+// Default threshold (1.0)
+check("(a+)+$");  // ❌ Unsafe (radius 4.0 > 1.0)
+
+// Higher threshold - more permissive
+check("(a+)+$", { threshold: 5.0 });  // ✅ Safe (radius 4.0 < 5.0)
+
+// Lower threshold - more strict
+check("a+", { threshold: 0.5 }); // May flag some patterns
+```
+
+### Recommended Thresholds
+
+| Environment | Threshold | Description |
+| :--- | :--- | :--- |
+| **Production** | `1.0` (default) | Standard exponential detection |
+| **Strict** | `0.8` | More conservative |
+| **Permissive** | `2.0` | Allow some complexity |
+
+## Silent Mode
+
+Suppress console output while still getting analysis results:
+
+```ts
+const result = check("(a+)+$", { silent: true });
+
+if (!result.safe) {
+  console.error(`Pattern unsafe: radius ${result.radius.toFixed(2)}`);
+}
+```
+
+## Error Throwing
+
+Use `throwErr` to prevent unsafe patterns from being used:
+
+```ts
+function createRegex(pattern: string): RegExp {
+  check(pattern, { 
+    throwErr: true, 
+    silent: true,
+    threshold: 1.0
+  });
+  
+  return new RegExp(pattern);
+}
+
+try {
+  const regex = createRegex("(a+)+$");
+} catch (error) {
+  console.error("Blocked unsafe regex:", error.message);
+}
+```

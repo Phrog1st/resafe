@@ -1,0 +1,62 @@
+---
+title: Security Rules
+description: Understanding spectral analysis for ReDoS detection.
+---
+
+Resafe uses **spectral analysis** to detect ReDoS vulnerabilities mathematically.
+
+<Callout type="info">
+  Patterns with spectral radius **> 1.0** are marked as unsafe by default. You can adjust this using the `threshold` option.
+</Callout>
+
+## Spectral Analysis
+
+### How It Works
+
+Resafe constructs a Thompson NFA from the regex pattern, eliminates epsilon transitions, builds an adjacency matrix, and computes the [spectral radius](/docs/spectral-radius) (largest eigenvalue).
+
+```regex
+(a+)+     // Spectral radius > 1: Exponential growth
+(a*)*     // Spectral radius > 1: Exponential growth
+```
+
+**Why it's dangerous**: Spectral radius > 1 indicates exponential path growth in the automaton.
+
+### Mathematical Detection
+
+The algorithm:
+1. **Thompson NFA Construction**: Converts regex to finite automaton
+2. **Epsilon Elimination**: Removes ε-transitions for clean structure
+3. **Adjacency Matrix**: Represents state transitions as matrix
+4. **Power Iteration**: Computes largest eigenvalue (spectral radius)
+5. **Detection**: If λ > threshold, pattern is unsafe
+
+### Examples
+
+```ts
+import { check } from 'resafe';
+
+// Detected: Nested quantifiers
+const r1 = check("(a+)+");
+console.log(r1.radius);  // > 1.0
+
+const r2 = check("([a-z]+)*");
+console.log(r2.radius);  // > 1.0
+
+// Safe patterns
+const r3 = check("a+");
+console.log(r3.radius);  // ≤ 1.0
+
+const r4 = check("[a-z]+");
+console.log(r4.radius);  // ≤ 1.0
+```
+
+## Threshold Configuration
+
+Adjust sensitivity:
+
+```ts
+check(pattern, {
+  threshold: 1.5  // More permissive
+});
+```

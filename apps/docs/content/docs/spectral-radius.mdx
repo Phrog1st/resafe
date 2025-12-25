@@ -1,0 +1,38 @@
+---
+title: Spectral Radius
+description: Learn what spectral radius means and how to configure thresholds.
+icon: CircleQuestionMark
+---
+
+## What is Spectral Radius?
+
+The **spectral radius** is the largest eigenvalue (λ) of the regex automaton's adjacency matrix. It mathematically represents the growth rate of possible execution paths.
+
+<Callout type="info">
+  **Simple rule**: If spectral radius > 1.0, the regex has exponential backtracking vulnerability.
+</Callout>
+
+## How It Works
+
+When Resafe analyzes a regex:
+
+1. Converts regex to finite automaton (NFA)
+2. Builds adjacency matrix of state transitions
+3. Computes largest eigenvalue using power iteration
+4. Compares eigenvalue to threshold
+
+### Mathematical Meaning
+
+```
+λ ≤ 1.0  →  Linear/polynomial time (SAFE)
+λ > 1.0  →  Exponential time (UNSAFE)
+```
+
+The higher the radius, the worse the exponential growth:
+
+| Radius | Growth Rate | Risk Level |
+| :--- | :--- | :--- |
+| 0.5 - 1.0 | Linear | ✅ Safe |
+| 1.0 - 2.0 | Moderate exponential | ⚠️ Warning |
+| 2.0 - 4.0 | High exponential | ❌ Dangerous |
+| > 4.0 | Severe exponential | 🔴 Critical |
