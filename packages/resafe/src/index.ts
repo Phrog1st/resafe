@@ -9,18 +9,18 @@ export interface Options extends Config {
 export function check(regex: string | RegExp, options: Options = {}): Result {
   const pattern = typeof regex === "string" ? regex : regex.source
   const result = analyze(pattern, options)
+  const radius = Number(result.radius.toFixed(4))
 
   if (!result.safe && !options.silent) {
-    log.error(`[Resafe] Unsafe pattern: /${pattern}/`)
-    log.warn(
-      `Spectral radius: ${result.radius.toFixed(4)} (threshold: ${options.threshold ?? 1.0})`,
-    )
-    log.hint("Simplify regex structure to eliminate exponential paths")
+    log.error("Unsafe Regex!", `/${pattern}/`, [
+      `Spectral radius: ${radius} (threshold: ${options.threshold ?? 1.0})`,
+      "? Consider simplifying quantifiers",
+    ])
   }
 
   if (!result.safe && options.throwErr) {
     throw new Error(
-      `[Resafe] Unsafe pattern with spectral radius ${result.radius.toFixed(4)}`,
+      `Unsafe regex (spectral radius ${radius})`,
     )
   }
 
