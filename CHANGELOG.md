@@ -1,1 +1,1 @@
-# Changelog
+packages/resafe/CHANGELOG.md
