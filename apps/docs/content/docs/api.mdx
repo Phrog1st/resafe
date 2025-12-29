@@ -52,20 +52,31 @@ interface Result {
 }
 ```
 
-### Examples
+---
+
+## `checkAsync(regex, options)`
+
+Asynchronous version of `check()` that returns a Promise. Useful for integration with async workflows.
 
 ```ts
-// Basic usage
-const result = check("(a+)+");
-console.log(result.safe);    // false
-console.log(result.radius);  // 4.0
+import { checkAsync } from "resafe";
 
-// Custom threshold
-const result2 = check("(a+)+", { threshold: 5.0 });
-console.log(result2.safe);   // true (radius 4.0 < 5.0)
+const result = await checkAsync(pattern, options);
+```
 
-// Silent mode
-const result3 = check("^[0-9]+$", { silent: true });
-console.log(result3.safe);   // true
-console.log(result3.radius); // 1.0
+### Parameters
+
+Same as `check()`:
+- `regex`: `string | RegExp` - The regex pattern to analyze
+- `options`: `Options` - Configuration options (optional)
+
+### Return Value
+
+Returns a `Promise<Result>`:
+
+```ts
+interface Result {
+  safe: boolean;
+  radius: number;
+}
 ```
